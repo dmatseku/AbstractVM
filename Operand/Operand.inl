@@ -22,7 +22,18 @@ template <typename Type>
 inline int
 Operand<Type>::getPrecision() const
 {
-	return (this->_type);
+	if (this->_type < eOperandType::Float)
+		return (0);
+
+	int precision = 0;
+	std::string str_value = this->_str_data;
+
+	if (str_value.find('.') != std::string::npos)
+	{
+		str_value.erase(0, str_value.find('.') + 1);
+		precision = str_value.length();
+	}
+	return (precision);
 }
 
 template <typename Type>

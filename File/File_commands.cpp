@@ -3,97 +3,35 @@
 #include <iomanip>
 
 void
-File::push(std::string const & str)
+File::push(command_data const & info)
 {
-	std::string			tmp;
-	eOperandType		operand_type = eOperandType::Int8;
 	IOperand const *	result;
 
-	if (str.find(' ') == std::string::npos
-	|| str.find('(') == std::string::npos
-	|| str.find(')') == std::string::npos
-	|| str.find(')') < str.length() - 1)
-	{
-		throw invalid_parameter_exception();
-	}
-
-	tmp = str;
-	tmp.erase(0, tmp.find(' ') + 1);
-	tmp.erase(tmp.find('('));
-	if (tmp == "int16")
-		operand_type = eOperandType::Int16;
-	else if (tmp == "int32")
-		operand_type = eOperandType::Int32;
-	else if (tmp == "float")
-		operand_type = eOperandType::Float;
-	else if (tmp == "double")
-		operand_type = eOperandType::Double;
-	else if (tmp != "int8")
-	{
-		throw invalid_parameter_exception();
-	}
-
-	tmp = str;
-	tmp.erase(0, tmp.find('(') + 1);
-	tmp.erase(tmp.find(')'));
-	result = Factory().createOperand(operand_type, tmp);
+	result = Factory().createOperand(this->_types[info.type], info.parameter);
 	this->_stack.push_front(result);
 }
 
 void
-File::assert(std::string const & str)
+File::assert(command_data const & info)
 {
-	std::string			tmp;
-	eOperandType		operand_type = eOperandType::Int8;
-
-	if (str.find(' ') == std::string::npos
-		|| str.find('(') == std::string::npos
-		|| str.find(')') == std::string::npos
-		|| str.find(')') < str.length() - 1)
-	{
-		throw invalid_parameter_exception();
-	}
-
-	tmp = str;
-	tmp.erase(0, tmp.find(' ') + 1);
-	tmp.erase(tmp.find('('));
-	if (tmp == "int16")
-		operand_type = eOperandType::Int16;
-	else if (tmp == "int32")
-		operand_type = eOperandType::Int32;
-	else if (tmp == "float")
-		operand_type = eOperandType::Float;
-	else if (tmp == "double")
-		operand_type = eOperandType::Double;
-	else if (tmp != "int8")
-	{
-		throw invalid_parameter_exception();
-	}
-
-	tmp = str;
-	tmp.erase(0, tmp.find('(') + 1);
-	tmp.erase(tmp.find(')'));
+	eOperandType		operand_type = this->_types[info.type];
+	std::string			str_value = info.parameter;
 
 	if (operand_type != this->_stack.front()->getType()
 
-	|| (operand_type < eOperandType::Float
-		&& (std::to_string(std::stoi(tmp)) != this->_stack.front()->toString()))
+		||	(operand_type < eOperandType::Float
+			&& (std::stoi(str_value) != std::stoi(this->_stack.front()->toString())))
 
-	|| (operand_type >= eOperandType::Float
-		&& (std::to_string(std::stod(tmp)) != this->_stack.front()->toString())))
+		|| (operand_type >= eOperandType::Float
+			&& (std::stod(str_value) != std::stod(this->_stack.front()->toString()))))
 	{
 		throw assert_exception();
 	}
 }
 
 void
-File::pop(std::string const & str)
+File::pop()
 {
-	if (str != "pop")
-	{
-		throw invalid_parameter_exception();
-	}
-
 	if (this->_stack.empty())
 	{
 		throw not_enough_operands_exception();
@@ -104,27 +42,18 @@ File::pop(std::string const & str)
 }
 
 void
-File::dump(std::string const & str)
+File::dump()
 {
-	if (str != "dump")
-	{
-		throw invalid_parameter_exception();
-	}
-
 	for (IOperand const * operand : this->_stack)
 		std::cout << operand->toString() << std::endl;
 }
 
 void
-File::add(std::string const & str)
+File::add()
 {
 	IOperand const * first_operand;
 	IOperand const * second_operand;
 
-	if (str != "add")
-	{
-		throw invalid_parameter_exception();
-	}
 	if (this->_stack.size() < 2)
 	{
 		throw not_enough_operands_exception();
@@ -142,15 +71,11 @@ File::add(std::string const & str)
 }
 
 void
-File::sub(std::string const & str)
+File::sub()
 {
 	IOperand const * first_operand;
 	IOperand const * second_operand;
 
-	if (str != "sub")
-	{
-		throw invalid_parameter_exception();
-	}
 	if (this->_stack.size() < 2)
 	{
 		throw not_enough_operands_exception();
@@ -168,15 +93,11 @@ File::sub(std::string const & str)
 }
 
 void
-File::mul(std::string const & str)
+File::mul()
 {
 	IOperand const * first_operand;
 	IOperand const * second_operand;
 
-	if (str != "mul")
-	{
-		throw invalid_parameter_exception();
-	}
 	if (this->_stack.size() < 2)
 	{
 		throw not_enough_operands_exception();
@@ -194,15 +115,11 @@ File::mul(std::string const & str)
 }
 
 void
-File::div(std::string const & str)
+File::div()
 {
 	IOperand const * first_operand;
 	IOperand const * second_operand;
 
-	if (str != "div")
-	{
-		throw invalid_parameter_exception();
-	}
 	if (this->_stack.size() < 2)
 	{
 		throw not_enough_operands_exception();
@@ -220,15 +137,11 @@ File::div(std::string const & str)
 }
 
 void
-File::mod(std::string const & str)
+File::mod()
 {
 	IOperand const * first_operand;
 	IOperand const * second_operand;
 
-	if (str != "mod")
-	{
-		throw invalid_parameter_exception();
-	}
 	if (this->_stack.size() < 2)
 	{
 		throw not_enough_operands_exception();
@@ -246,13 +159,8 @@ File::mod(std::string const & str)
 }
 
 void
-File::print(std::string const & str)
+File::print()
 {
-	if (str != "print")
-	{
-		throw invalid_parameter_exception();
-	}
-
 	if (this->_stack.empty())
 	{
 		throw not_enough_operands_exception();
@@ -273,12 +181,7 @@ File::print(std::string const & str)
 }
 
 void
-File::exit(std::string const & str)
+File::exit()
 {
-	if (str != "exit")
-	{
-		throw invalid_parameter_exception();
-	}
-
 	this->_exit = true;
 }

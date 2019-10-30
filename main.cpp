@@ -3,20 +3,32 @@
 
 int main(int ac, char** av)
 {
+	int file_nb = 1;
 	try
 	{
 		if (ac == 1)
 			VM::add_file();
 		else
 		{
-			for (int nb = 1; nb < ac; nb++)
-				VM::add_file(av[nb]);
+			for (file_nb = 1; file_nb < ac; file_nb++)
+			{
+
+				VM::add_file(av[file_nb]);
+				std::cout << av[file_nb] << ": OK" << std::endl;
+			}
 		}
-		VM::execute();
+		try
+		{
+			VM::execute();
+		}
+		catch (std::exception& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 	catch (std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cout << av[file_nb] << ": " << e.what() << std::endl;
 	}
 	return (0);
 }
