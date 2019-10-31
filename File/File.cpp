@@ -33,6 +33,7 @@ File::File(std::istream& stream): File()
 	std::string		str;
 	bool			standard_input = (&stream == &std::cin);
 	command_data	data;
+	int				line = 1;
 
 	while (std::getline(stream, str) && (!standard_input || str != ";;"))
 	{
@@ -40,13 +41,15 @@ File::File(std::istream& stream): File()
 			str.erase(str.find(';'));
 
 		if (!File::validate_command(str, data))
-			throw invalid_command_or_parameter_exception();
+			throw invalid_command_or_parameter_exception("(Line " + std::to_string(line) + ") "
+					"Command or parameter is invalid: \"" + str + "\"");
 
 		if (!str.empty())
 			this->_lines_list.push_back(data);
 
 		if (!stream.good())
 			stream.clear();
+		line++;
 	}
 }
 
@@ -83,29 +86,22 @@ File::operator =(File const & src)
 
 //===Exceptions=====================================================================================
 
-const char*
-File::invalid_command_or_parameter_exception::what() const noexcept
-{
-	return ("Invalid command or parameter");
-}
 
-const char*
-File::not_enough_operands_exception::what() const noexcept
-{
-	return ("Not enough operands for command");
-}
+File::invalid_command_or_parameter_exception::invalid_command_or_parameter_exception
+(std::string const & str): std::invalid_argument(str)
+{}
 
-const char*
-File::assert_exception::what() const noexcept
-{
-	return ("Assert command is not true");
-}
+File::not_enough_operands_exception::not_enough_operands_exception(std::string const & str)
+: std::length_error(str)
+{}
 
-const char*
-File::not_ascii_exception::what() const noexcept
-{
-	return ("Last operand is not ascii");
-}
+File::assert_exception::assert_exception(std::string const & str)
+: std::invalid_argument(str)
+{}
+
+File::not_ascii_exception::not_ascii_exception(std::string const & str)
+: std::invalid_argument(str)
+{}
 
 const char*
 File::no_exit_exception::what() const noexcept

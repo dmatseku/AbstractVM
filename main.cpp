@@ -12,7 +12,6 @@ int main(int ac, char** av)
 		{
 			for (file_nb = 1; file_nb < ac; file_nb++)
 			{
-
 				VM::add_file(av[file_nb]);
 				std::cout << av[file_nb] << ": OK" << std::endl;
 			}

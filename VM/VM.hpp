@@ -10,12 +10,6 @@ namespace VM
 	void	add_file(std::string const &);
 	void	add_file();
 	void	execute();
-
-	class	no_exit_exception : public std::exception
-	{
-	public:
-		const char* what() const noexcept override;
-	};
 }
 
 #endif

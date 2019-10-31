@@ -62,34 +62,35 @@ public:
 
 //===Exceptions=====================================================================================
 
-	class	invalid_command_or_parameter_exception : public std::exception
+	class	invalid_command_or_parameter_exception : public std::invalid_argument
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit invalid_command_or_parameter_exception(std::string const &);
 	};
 
-	class	not_enough_operands_exception : public std::exception
+	class	not_enough_operands_exception : public std::length_error
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit not_enough_operands_exception(std::string const &);
 	};
 
-	class	assert_exception : public std::exception
+	class	assert_exception : public std::invalid_argument
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit assert_exception(std::string const &);
 	};
 
-	class	not_ascii_exception : public std::exception
+	class	not_ascii_exception : public std::invalid_argument
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit not_ascii_exception(std::string const &);
 	};
 
 	class	no_exit_exception : public std::exception
 	{
 	public:
 		const char* what() const noexcept override;
+
 	};
 
 //===End Exceptions=================================================================================

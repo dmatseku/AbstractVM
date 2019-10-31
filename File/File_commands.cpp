@@ -17,6 +17,11 @@ File::assert(command_data const & info)
 	eOperandType		operand_type = this->_types[info.type];
 	std::string			str_value = info.parameter;
 
+	if (this->_stack.empty())
+	{
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()));
+	}
 	if (operand_type != this->_stack.front()->getType()
 
 		||	(operand_type < eOperandType::Float
@@ -25,7 +30,7 @@ File::assert(command_data const & info)
 		|| (operand_type >= eOperandType::Float
 			&& (std::stod(str_value) != std::stod(this->_stack.front()->toString()))))
 	{
-		throw assert_exception();
+		throw assert_exception("Parameter is not equal to last operand");
 	}
 }
 
@@ -34,7 +39,8 @@ File::pop()
 {
 	if (this->_stack.empty())
 	{
-		throw not_enough_operands_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	delete this->_stack.front();
@@ -56,7 +62,8 @@ File::add()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	first_operand = this->_stack.front();
@@ -78,7 +85,8 @@ File::sub()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	first_operand = this->_stack.front();
@@ -100,7 +108,8 @@ File::mul()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	first_operand = this->_stack.front();
@@ -122,7 +131,8 @@ File::div()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	first_operand = this->_stack.front();
@@ -144,7 +154,8 @@ File::mod()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	first_operand = this->_stack.front();
@@ -163,18 +174,15 @@ File::print()
 {
 	if (this->_stack.empty())
 	{
-		throw not_enough_operands_exception();
-	}
-
-	if (this->_stack.front()->getType() != eOperandType::Int8)
-	{
-		throw not_ascii_exception();
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()));
 	}
 
 	int32_t value = std::stoi(this->_stack.front()->toString());
-	if (value < 0 || value > 127)
+	if (this->_stack.front()->getType() != eOperandType::Int8
+			|| value < 0 || value > 127)
 	{
-		throw not_ascii_exception();
+		throw not_ascii_exception("Last operand is not ASCII symbol");
 	}
 
 	std::cout << static_cast<char>(value) << std::endl;

@@ -46,8 +46,3 @@ VM::execute()
 		}
 	}
 }
-
-const char*	VM::no_exit_exception::what() const noexcept
-{
-	return ("File has no end(");
-}

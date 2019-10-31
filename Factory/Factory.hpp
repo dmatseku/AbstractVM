@@ -16,26 +16,26 @@ public:
 
 
 
-	class	overflow_or_underflow_exception : public std::exception
+	class	overflow_or_underflow_exception : public std::range_error
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit overflow_or_underflow_exception(std::string const &);
 	};
 
 
 
-	class	overflow_exception : public std::exception
+	class	overflow_exception : public std::overflow_error
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit overflow_exception(std::string const &);
 	};
 
 
 
-	class	underflow_exception : public std::exception
+	class	underflow_exception : public std::underflow_error
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit underflow_exception(std::string const &);
 	};
 
 

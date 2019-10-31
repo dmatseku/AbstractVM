@@ -29,7 +29,7 @@ Factory::createInt8(std::string const & value) const
 	}
 	catch (std::out_of_range& e)
 	{
-		throw overflow_or_underflow_exception();
+		throw overflow_or_underflow_exception("Value is overflow or underflow: " + value);
 	}
 	catch(std::invalid_argument& e)
 	{
@@ -38,11 +38,11 @@ Factory::createInt8(std::string const & value) const
 
 	if (nb > CHAR_MAX)
 	{
-		throw overflow_exception();
+		throw overflow_exception("Value is overflow: (int8)" + value);
 	}
 	else if (nb < CHAR_MIN)
 	{
-		throw underflow_exception();
+		throw underflow_exception("Value is underflow: (int8)" + value);
 	}
 
 	return (new Operand<int_fast8_t>(eOperandType::Int8, static_cast<int8_t>(nb)));
@@ -59,7 +59,7 @@ Factory::createInt16(std::string const & value) const
 	}
 	catch (std::out_of_range& e)
 	{
-		throw overflow_or_underflow_exception();
+		throw overflow_or_underflow_exception("Value is overflow or underflow: " + value);
 	}
 	catch(std::invalid_argument& e)
 	{
@@ -68,11 +68,11 @@ Factory::createInt16(std::string const & value) const
 
 	if (nb > SHRT_MAX)
 	{
-		throw overflow_exception();
+		throw overflow_exception("Value is overflow: (int16)" + value);
 	}
 	else if (nb < SHRT_MIN)
 	{
-		throw underflow_exception();
+		throw underflow_exception("Value is underflow: (int16)" + value);
 	}
 
 	return (new Operand<int_fast16_t>(eOperandType::Int16, static_cast<int_fast16_t>(nb)));
@@ -89,7 +89,7 @@ Factory::createInt32(std::string const & value) const
 	}
 	catch (std::out_of_range& e)
 	{
-		throw overflow_or_underflow_exception();
+		throw overflow_or_underflow_exception("Value is overflow or underflow: " + value);
 	}
 	catch(std::invalid_argument& e)
 	{
@@ -110,7 +110,7 @@ Factory::createFloat(std::string const & value) const
 	}
 	catch (std::out_of_range& e)
 	{
-		throw overflow_or_underflow_exception();
+		throw overflow_or_underflow_exception("Value is overflow or underflow: " + value);
 	}
 	catch(std::invalid_argument& e)
 	{
@@ -131,7 +131,7 @@ Factory::createDouble(std::string const & value) const
 	}
 	catch (std::out_of_range& e)
 	{
-		throw overflow_or_underflow_exception();
+		throw overflow_or_underflow_exception("Value is overflow or underflow: " + value);
 	}
 	catch(std::invalid_argument& e)
 	{
@@ -168,20 +168,17 @@ Factory::operator =(Factory const &src)
 
 //===Exceptions=====================================================================================
 
-const char*	Factory::overflow_exception::what() const noexcept
-{
-	return ("Value is overflow");
-}
+Factory::overflow_exception::overflow_exception(std::string const & str)
+: std::overflow_error(str)
+{}
 
-const char*	Factory::underflow_exception::what() const noexcept
-{
-	return ("Value is underflow");
-}
+Factory::underflow_exception::underflow_exception(std::string const & str)
+: std::underflow_error(str)
+{}
 
-const char*	Factory::overflow_or_underflow_exception::what() const noexcept
-{
-	return ("Value is overflow or underflow");
-}
+Factory::overflow_or_underflow_exception::overflow_or_underflow_exception(std::string const & str)
+: std::range_error(str)
+{}
 
 const char*	Factory::incorrect_input_exception::what() const noexcept
 {
