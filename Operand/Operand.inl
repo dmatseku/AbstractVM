@@ -125,7 +125,7 @@ Operand<Type>::operator	/(IOperand const & src) const
 
 	if (src_data == 0)
 	{
-		throw division_or_modulo_by_null_exception();
+		throw invalid_operand_exception("Division by null");
 	}
 
 	res = std::to_string(this->_data / src_data);
@@ -145,14 +145,14 @@ Operand<Type>::operator	%(IOperand const & src) const
 
 	if (src.getType() >= eOperandType::Float)
 	{
-		throw invalid_operand_exception();
+		throw invalid_operand_exception("Second operand is floating point variable");
 	}
 
 	src_data = static_cast<int32_t>(std::stoi(src.toString()));
 
 	if (src_data == 0)
 	{
-		throw division_or_modulo_by_null_exception();
+		throw invalid_operand_exception("Modulo by null");
 	}
 
 	res = std::to_string(static_cast<int32_t>(this->_data) % src_data);
@@ -166,16 +166,9 @@ Operand<Type>::operator	%(IOperand const & src) const
 //===Exceptions=====================================================================================
 
 template <typename Type>
-const char*	Operand<Type>::invalid_operand_exception::what() const noexcept
-{
-	return ("Invalid operand for modulo");
-}
-
-template <typename Type>
-const char*	Operand<Type>::division_or_modulo_by_null_exception::what() const noexcept
-{
-	return ("Division or modulo by null");
-}
+inline Operand<Type>::invalid_operand_exception::invalid_operand_exception(std::string const & str)
+: std::invalid_argument(str)
+{}
 
 //===End Exceptions=================================================================================
 

@@ -74,22 +74,22 @@ public:
 		explicit not_enough_operands_exception(std::string const &);
 	};
 
-	class	assert_exception : public std::invalid_argument
-	{
-	public:
-		explicit assert_exception(std::string const &);
-	};
-
 	class	not_ascii_exception : public std::invalid_argument
 	{
 	public:
 		explicit not_ascii_exception(std::string const &);
 	};
 
-	class	no_exit_exception : public std::exception
+	class	assert_exception : public std::invalid_argument
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit assert_exception(std::string const &);
+	};
+
+	class	no_exit_exception : public std::runtime_error
+	{
+	public:
+		explicit no_exit_exception(std::string const &);
 
 	};
 

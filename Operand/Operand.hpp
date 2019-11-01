@@ -25,18 +25,10 @@ public:
 
 
 
-	class	invalid_operand_exception : public std::exception
+	class	invalid_operand_exception : public std::invalid_argument
 	{
 	public:
-		const char* what() const noexcept override;
-	};
-
-
-
-	class	division_or_modulo_by_null_exception : public std::exception
-	{
-	public:
-		const char* what() const noexcept override;
+		explicit invalid_operand_exception(std::string const &);
 	};
 
 
@@ -48,6 +40,7 @@ private:
 	std::string		_str_data;
 	Type const		_data;
 };
+
 #include "Operand.inl"
 
 #endif

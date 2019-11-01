@@ -19,8 +19,8 @@ File::assert(command_data const & info)
 
 	if (this->_stack.empty())
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 	if (operand_type != this->_stack.front()->getType()
 
@@ -39,8 +39,8 @@ File::pop()
 {
 	if (this->_stack.empty())
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	delete this->_stack.front();
@@ -62,8 +62,8 @@ File::add()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	first_operand = this->_stack.front();
@@ -71,7 +71,7 @@ File::add()
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
 
-	this->_stack.push_front(*first_operand + *second_operand);
+	this->_stack.push_front(*second_operand + *first_operand);
 
 	delete first_operand;
 	delete second_operand;
@@ -85,8 +85,8 @@ File::sub()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	first_operand = this->_stack.front();
@@ -94,7 +94,7 @@ File::sub()
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
 
-	this->_stack.push_front(*first_operand - *second_operand);
+	this->_stack.push_front(*second_operand - *first_operand);
 
 	delete first_operand;
 	delete second_operand;
@@ -108,8 +108,8 @@ File::mul()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	first_operand = this->_stack.front();
@@ -117,7 +117,7 @@ File::mul()
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
 
-	this->_stack.push_front(*first_operand * *second_operand);
+	this->_stack.push_front(*second_operand * *first_operand);
 
 	delete first_operand;
 	delete second_operand;
@@ -131,8 +131,8 @@ File::div()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	first_operand = this->_stack.front();
@@ -140,7 +140,7 @@ File::div()
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
 
-	this->_stack.push_front(*first_operand / *second_operand);
+	this->_stack.push_front(*second_operand / *first_operand);
 
 	delete first_operand;
 	delete second_operand;
@@ -154,8 +154,8 @@ File::mod()
 
 	if (this->_stack.size() < 2)
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	first_operand = this->_stack.front();
@@ -163,7 +163,7 @@ File::mod()
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
 
-	this->_stack.push_front(*first_operand % *second_operand);
+	this->_stack.push_front(*second_operand % *first_operand);
 
 	delete first_operand;
 	delete second_operand;
@@ -174,8 +174,8 @@ File::print()
 {
 	if (this->_stack.empty())
 	{
-		throw not_enough_operands_exception("Not enough operands for command (need: 2, exist: "
-													+ std::to_string(this->_stack.size()));
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+													+ std::to_string(this->_stack.size()) + ")");
 	}
 
 	int32_t value = std::stoi(this->_stack.front()->toString());

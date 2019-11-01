@@ -40,10 +40,10 @@ public:
 
 
 
-	class	incorrect_input_exception : public std::exception
+	class	incorrect_input_exception : public std::invalid_argument
 	{
 	public:
-		const char* what() const noexcept override;
+		explicit incorrect_input_exception(std::string const &);
 	};
 
 

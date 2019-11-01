@@ -33,7 +33,7 @@ Factory::createInt8(std::string const & value) const
 	}
 	catch(std::invalid_argument& e)
 	{
-		throw incorrect_input_exception();
+		throw incorrect_input_exception("Input value is incorrect: " + value);
 	}
 
 	if (nb > CHAR_MAX)
@@ -63,7 +63,7 @@ Factory::createInt16(std::string const & value) const
 	}
 	catch(std::invalid_argument& e)
 	{
-		throw incorrect_input_exception();
+		throw incorrect_input_exception("Input value is incorrect: " + value);
 	}
 
 	if (nb > SHRT_MAX)
@@ -93,7 +93,7 @@ Factory::createInt32(std::string const & value) const
 	}
 	catch(std::invalid_argument& e)
 	{
-		throw incorrect_input_exception();
+		throw incorrect_input_exception("Input value is incorrect: " + value);
 	}
 
 	return (new Operand<int_fast32_t>(eOperandType::Int32, nb));
@@ -114,7 +114,7 @@ Factory::createFloat(std::string const & value) const
 	}
 	catch(std::invalid_argument& e)
 	{
-		throw incorrect_input_exception();
+		throw incorrect_input_exception("Input value is incorrect: " + value);
 	}
 
 	return (new Operand<float>(eOperandType::Float, nb));
@@ -135,7 +135,7 @@ Factory::createDouble(std::string const & value) const
 	}
 	catch(std::invalid_argument& e)
 	{
-		throw incorrect_input_exception();
+		throw incorrect_input_exception("Input value is incorrect: " + value);
 	}
 
 	return (new Operand<double>(eOperandType::Double, nb));
@@ -180,9 +180,8 @@ Factory::overflow_or_underflow_exception::overflow_or_underflow_exception(std::s
 : std::range_error(str)
 {}
 
-const char*	Factory::incorrect_input_exception::what() const noexcept
-{
-	return ("Input value is incorrect");
-}
+Factory::incorrect_input_exception::incorrect_input_exception(std::string const & str)
+: std::invalid_argument(str)
+{}
 
 //===End Exceptions=================================================================================

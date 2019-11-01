@@ -12,7 +12,12 @@ namespace
 void
 VM::add_file(std::string const &str)
 {
-	std::ifstream	file(str);
+	std::ifstream	file;
+
+	file.open(str);
+	if (!file)
+		throw invalid_file_exception("File does not exist");
+
 	files.emplace_back(File(file));
 	file.close();
 }
@@ -42,7 +47,11 @@ VM::execute()
 		}
 		catch (std::exception& e)
 		{
-			std::cout << e.what() << std::endl;
+			std::cout << "Error: " << e.what() << std::endl;
 		}
 	}
 }
+
+VM::invalid_file_exception::invalid_file_exception(std::string const & str)
+: std::invalid_argument(str)
+{}

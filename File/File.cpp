@@ -103,10 +103,8 @@ File::not_ascii_exception::not_ascii_exception(std::string const & str)
 : std::invalid_argument(str)
 {}
 
-const char*
-File::no_exit_exception::what() const noexcept
-{
-	return ("File has no end(");
-}
+File::no_exit_exception::no_exit_exception(std::string const & str)
+: std::runtime_error(str)
+{}
 
 //===End Exceptions=================================================================================

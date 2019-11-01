@@ -26,7 +26,7 @@ File::execute()
 	}
 
 	if (!this->_exit)
-		throw no_exit_exception();
+		throw no_exit_exception("File has no exit(");
 }
 
 bool
