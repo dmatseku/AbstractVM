@@ -33,7 +33,7 @@ File::File(std::istream& stream): File()
 	std::string		str;
 	bool			standard_input = (&stream == &std::cin);
 	command_data	data;
-	int				line = 1;
+	int				line_nb = 1;
 
 	while (std::getline(stream, str) && (!standard_input || str != ";;"))
 	{
@@ -41,7 +41,7 @@ File::File(std::istream& stream): File()
 			str.erase(str.find(';'));
 
 		if (!File::validate_command(str, data))
-			throw invalid_command_or_parameter_exception("(Line " + std::to_string(line) + ") "
+			throw invalid_command_or_parameter_exception("(Line " + std::to_string(line_nb) + ") "
 					"Command or parameter is invalid: \"" + str + "\"");
 
 		if (!str.empty())
@@ -49,7 +49,7 @@ File::File(std::istream& stream): File()
 
 		if (!stream.good())
 			stream.clear();
-		line++;
+		line_nb++;
 	}
 }
 
@@ -88,7 +88,8 @@ File::operator =(File const & src)
 
 
 File::invalid_command_or_parameter_exception::invalid_command_or_parameter_exception
-(std::string const & str): std::invalid_argument(str)
+(std::string const & str)
+: std::invalid_argument(str)
 {}
 
 File::not_enough_operands_exception::not_enough_operands_exception(std::string const & str)

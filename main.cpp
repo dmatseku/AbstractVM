@@ -27,7 +27,10 @@ int main(int ac, char** av)
 	}
 	catch (std::exception& e)
 	{
-		std::cout << av[file_nb] << ": " << e.what() << std::endl;
+		if (ac > 1)
+			std::cout << av[file_nb] << ": " << e.what() << std::endl;
+		else
+			std::cout << "stdin: " << e.what() << std::endl;
 	}
 	return (0);
 }
