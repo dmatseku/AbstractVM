@@ -7,9 +7,7 @@
 
 namespace VM
 {
-	void	add_file(std::string const &);
-	void	add_file();
-	void	execute();
+	void	read_file(char**, int);
 
 	class	invalid_file_exception : public std::invalid_argument
 	{

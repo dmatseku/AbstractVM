@@ -6,9 +6,9 @@
 //===Operations=====================================================================================
 
 void
-File::execute()
+File::execute(command_data const & line, int line_nb)
 {
-	for (command_data const & line : this->_lines_list)
+	try
 	{
 		if (line.parameter.empty())
 		{
@@ -20,13 +20,11 @@ File::execute()
 			p_operation operation = this->_parameter_funcs_map[line.command];
 			(this->*operation)(line);
 		}
-
-		if (this->_exit)
-			break;
 	}
-
-	if (!this->_exit)
-		throw no_exit_exception("File has no exit(");
+	catch (std::exception& e)
+	{
+		std::cout << "(Line " + std::to_string(line_nb) + ") " + e.what() << std::endl;
+	}
 }
 
 bool

@@ -24,49 +24,29 @@ private:
 //===End Structures=================================================================================
 
 public:
-//===Constructors===================================================================================
+//===Constructors and Destructor====================================================================
 
 	explicit File(std::istream&);
-	File(File const &);
+	File(File const &) = delete;
 
-//===End Constructors===============================================================================
+	~File();
+
+//===End Constructors and Destructor================================================================
 
 //===Typedefs and Usings============================================================================
 
 	typedef void	(File::* p_operation)(command_data const &);
 	typedef void	(File::* non_p_operation)();
-	using			iterator = std::list<std::string>::iterator;
-	using			const_iterator = std::list<std::string>::const_iterator;
 
 //===End Typedefs and Usings========================================================================
 
 //===Operators======================================================================================
 
-	File&			operator =(File const &);
+	File&			operator =(File const &) = delete;
 
 //===End Operators==================================================================================
 
-//===Operations=====================================================================================
-
-	void			execute();
-
-//===End Operations=================================================================================
-
-//===Destructor=====================================================================================
-
-	~File();
-
-//===End Destructor=================================================================================
-
-
-
 //===Exceptions=====================================================================================
-
-	class	invalid_command_or_parameter_exception : public std::invalid_argument
-	{
-	public:
-		explicit invalid_command_or_parameter_exception(std::string const &);
-	};
 
 	class	not_enough_operands_exception : public std::length_error
 	{
@@ -104,20 +84,20 @@ private:
 
 //===End Constructors===============================================================================
 
-//===Base properties================================================================================
+//===Properties=====================================================================================
 
 	std::map<std::string, void (File::*)(command_data const &)>	_parameter_funcs_map;
 	std::map<std::string, void (File::*)()>						_non_parameter_funcs_map;
 	std::map<std::string, eOperandType>							_types;
-	std::list<command_data>										_lines_list;
 	std::list<IOperand const *>									_stack;
 	bool														_exit;
 
-//===End Base properties============================================================================
+//===End Properties=================================================================================
 
 //===Operations=====================================================================================
 
 	static bool		validate_command(std::string const &, command_data &);
+	void			execute(command_data const & line, int line_nb);
 
 	void			push(command_data const &);
 	void			assert(command_data const &);

@@ -40,17 +40,19 @@ File::File(std::istream& stream): File()
 		if (str.find(';') != std::string::npos)
 			str.erase(str.find(';'));
 
-		if (!File::validate_command(str, data))
-			throw invalid_command_or_parameter_exception("(Line " + std::to_string(line_nb) + ") "
-					"Command or parameter is invalid: \"" + str + "\"");
-
-		if (!str.empty())
-			this->_lines_list.push_back(data);
+		if (File::validate_command(str, data) && !str.empty())
+			execute(data, line_nb);
+		else if (!str.empty())
+			std::cout << "(Line " + std::to_string(line_nb) + ") "
+					"Command or parameter is invalid: \"" + str + "\"" << std::endl;
 
 		if (!stream.good())
 			stream.clear();
 		line_nb++;
 	}
+
+	if (!this->_exit)
+		throw no_exit_exception("File has no exit(");
 }
 
 File::~File()
@@ -59,38 +61,9 @@ File::~File()
 		delete operand;
 }
 
-File::File(File const & src): File()
-{
-	for (command_data const & line : src._lines_list)
-		this->_lines_list.push_back(line);
-}
-
 //===End Constructors and Destructor================================================================
 
-//===Operators======================================================================================
-
-File&
-File::operator =(File const & src)
-{
-	if (&src != this)
-	{
-		this->_lines_list.clear();
-		for (command_data const & line : src._lines_list)
-			this->_lines_list.push_back(line);
-	}
-	return (*this);
-}
-
-//===End Operators==================================================================================
-
-
 //===Exceptions=====================================================================================
-
-
-File::invalid_command_or_parameter_exception::invalid_command_or_parameter_exception
-(std::string const & str)
-: std::invalid_argument(str)
-{}
 
 File::not_enough_operands_exception::not_enough_operands_exception(std::string const & str)
 : std::length_error(str)
