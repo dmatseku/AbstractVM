@@ -1,6 +1,10 @@
 #ifndef ABSTRACTVM_FILE_HPP
 #define ABSTRACTVM_FILE_HPP
 
+#define COMMAND_POS 2
+#define TYPE_POS 4
+#define ARG_POS 6
+
 #include <list>
 #include <map>
 #include "../Operand/IOperand.hpp"
@@ -101,6 +105,11 @@ private:
 
 	void			push(command_data const &);
 	void			assert(command_data const &);
+	void			add(command_data const &);
+	void			sub(command_data const &);
+	void			mul(command_data const &);
+	void			div(command_data const &);
+	void			mod(command_data const &);
 
 	void			pop();
 	void			dump();

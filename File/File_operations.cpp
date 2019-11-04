@@ -30,8 +30,9 @@ File::execute(command_data const & line, int line_nb)
 bool
 File::validate_command(std::string const & str, command_data & data)
 {
-	std::regex non_parameter_commands("(pop|dump|add|sub|mul|div|mod|print|exit)(\\s*)");
-	std::regex parameter_commands("(push|assert)(\\s+)(int8|int16|int32|float|double)"
+	std::regex non_parameter_commands("(\\s*)(pop|dump|add|sub|mul|div|mod|print|exit)(\\s*)");
+	std::regex parameter_commands(
+			"(\\s*)(push|assert|add|sub|mul|div|mod)(\\s+)(int8|int16|int32|float|double)"
 							 "(\\()(-?\\d+\\.?\\d*f?)(\\))(\\s*)");
 	std::cmatch info;
 	bool res = false;
@@ -40,16 +41,16 @@ File::validate_command(std::string const & str, command_data & data)
 		res = true;
 	else if (std::regex_match(str.c_str(), info, non_parameter_commands))
 	{
-		data.command = info.str(1);
+		data.command = info.str(COMMAND_POS);
 		data.type = "";
 		data.parameter = "";
 		res = true;
 	}
 	else if (std::regex_match(str.c_str(), info, parameter_commands))
 	{
-		data.command = info.str(1);
-		data.type = info.str(3);
-		data.parameter = info.str(5);
+		data.command = info.str(COMMAND_POS);
+		data.type = info.str(TYPE_POS);
+		data.parameter = info.str(ARG_POS);
 		res = true;
 	}
 	return (res);

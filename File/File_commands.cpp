@@ -78,6 +78,28 @@ File::add()
 }
 
 void
+File::add(command_data const & info)
+{
+	IOperand const * first_operand;
+	IOperand const * second_operand;
+
+	if (this->_stack.empty())
+	{
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+											+ std::to_string(this->_stack.size()) + ")");
+	}
+
+	first_operand = this->_stack.front();
+	this->_stack.pop_front();
+	second_operand = Factory().createOperand(this->_types[info.type], info.parameter);
+
+	this->_stack.push_front(*second_operand + *first_operand);
+
+	delete first_operand;
+	delete second_operand;
+}
+
+void
 File::sub()
 {
 	IOperand const * first_operand;
@@ -93,6 +115,28 @@ File::sub()
 	this->_stack.pop_front();
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
+
+	this->_stack.push_front(*second_operand - *first_operand);
+
+	delete first_operand;
+	delete second_operand;
+}
+
+void
+File::sub(command_data const & info)
+{
+	IOperand const * first_operand;
+	IOperand const * second_operand;
+
+	if (this->_stack.empty())
+	{
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+											+ std::to_string(this->_stack.size()) + ")");
+	}
+
+	first_operand = this->_stack.front();
+	this->_stack.pop_front();
+	second_operand = Factory().createOperand(this->_types[info.type], info.parameter);
 
 	this->_stack.push_front(*second_operand - *first_operand);
 
@@ -124,6 +168,28 @@ File::mul()
 }
 
 void
+File::mul(command_data const & info)
+{
+	IOperand const * first_operand;
+	IOperand const * second_operand;
+
+	if (this->_stack.empty())
+	{
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+											+ std::to_string(this->_stack.size()) + ")");
+	}
+
+	first_operand = this->_stack.front();
+	this->_stack.pop_front();
+	second_operand = Factory().createOperand(this->_types[info.type], info.parameter);
+
+	this->_stack.push_front(*second_operand * *first_operand);
+
+	delete first_operand;
+	delete second_operand;
+}
+
+void
 File::div()
 {
 	IOperand const * first_operand;
@@ -147,6 +213,28 @@ File::div()
 }
 
 void
+File::div(command_data const & info)
+{
+	IOperand const * first_operand;
+	IOperand const * second_operand;
+
+	if (this->_stack.empty())
+	{
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+											+ std::to_string(this->_stack.size()) + ")");
+	}
+
+	first_operand = this->_stack.front();
+	this->_stack.pop_front();
+	second_operand = Factory().createOperand(this->_types[info.type], info.parameter);
+
+	this->_stack.push_front(*second_operand / *first_operand);
+
+	delete first_operand;
+	delete second_operand;
+}
+
+void
 File::mod()
 {
 	IOperand const * first_operand;
@@ -162,6 +250,28 @@ File::mod()
 	this->_stack.pop_front();
 	second_operand = this->_stack.front();
 	this->_stack.pop_front();
+
+	this->_stack.push_front(*second_operand % *first_operand);
+
+	delete first_operand;
+	delete second_operand;
+}
+
+void
+File::mod(command_data const & info)
+{
+	IOperand const * first_operand;
+	IOperand const * second_operand;
+
+	if (this->_stack.empty())
+	{
+		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
+											+ std::to_string(this->_stack.size()) + ")");
+	}
+
+	first_operand = this->_stack.front();
+	this->_stack.pop_front();
+	second_operand = Factory().createOperand(this->_types[info.type], info.parameter);
 
 	this->_stack.push_front(*second_operand % *first_operand);
 

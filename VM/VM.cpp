@@ -14,14 +14,28 @@ namespace
 		if (!stream)
 			throw VM::invalid_file_exception("File does not exist");
 
-		File file(stream);
+		try
+		{
+			File file(stream);
+		}
+		catch (File::no_exit_exception& e)
+		{
+			std:: cout << e.what() << std::endl;
+		}
 
 		stream.close();
 	}
 
 	void read_from_stdin()
 	{
-		File file(std::cin);
+		try
+		{
+			File file(std::cin);
+		}
+		catch (File::no_exit_exception& e)
+		{
+			std:: cout << e.what() << std::endl;
+		}
 	}
 }
 

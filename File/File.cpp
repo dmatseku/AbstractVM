@@ -8,6 +8,11 @@ File::File()
 {
 	this->_parameter_funcs_map["push"] = &File::push;
 	this->_parameter_funcs_map["assert"] = &File::assert;
+	this->_parameter_funcs_map["add"] = &File::add;
+	this->_parameter_funcs_map["sub"] = &File::sub;
+	this->_parameter_funcs_map["mul"] = &File::mul;
+	this->_parameter_funcs_map["div"] = &File::div;
+	this->_parameter_funcs_map["mod"] = &File::mod;
 
 	this->_non_parameter_funcs_map["pop"] = &File::pop;
 	this->_non_parameter_funcs_map["dump"] = &File::dump;
@@ -37,14 +42,17 @@ File::File(std::istream& stream): File()
 
 	while (std::getline(stream, str) && (!standard_input || str != ";;"))
 	{
-		if (str.find(';') != std::string::npos)
-			str.erase(str.find(';'));
+		if (!this->_exit)
+		{
+			if (str.find(';') != std::string::npos)
+				str.erase(str.find(';'));
 
-		if (File::validate_command(str, data) && !str.empty())
-			execute(data, line_nb);
-		else if (!str.empty())
-			std::cout << "(Line " + std::to_string(line_nb) + ") "
-					"Command or parameter is invalid: \"" + str + "\"" << std::endl;
+			if (File::validate_command(str, data) && !str.empty())
+				execute(data, line_nb);
+			else if (!str.empty())
+				std::cout << "(Line " + std::to_string(line_nb) + ") "
+					  "Invalid command or parameter: \"" + str + "\"" << std::endl;
+		}
 
 		if (!stream.good())
 			stream.clear();
