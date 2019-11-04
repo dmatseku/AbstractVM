@@ -3,8 +3,7 @@ project(AbstractVM)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -pedantic -Ofast")
 
-add_executable(AbstractVM main.cpp Operand/eOperandType.hpp Operand/Operand.hpp Operand/Operand.inl
-        Operand/IOperand.hpp Factory/Factory.cpp Factory/Factory.hpp VM/VM.cpp VM/VM.hpp File/File.cpp
-        File/File.hpp File/File_operations.cpp File/File_commands.cpp)
+add_executable(AbstractVM main.cpp Factory/Factory.cpp VM/VM.cpp File/File.cpp
+        File/File_operations.cpp File/File_other_commands.cpp File/File_arithmetic_commands.cpp)
