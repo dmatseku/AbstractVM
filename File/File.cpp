@@ -6,6 +6,7 @@
 
 File::File()
 {
+	// initialization of a map that contains functions that take parameters
 	this->_parameter_funcs_map["push"] = &File::push;
 	this->_parameter_funcs_map["assert"] = &File::assert;
 	this->_parameter_funcs_map["add"] = &File::add;
@@ -14,6 +15,8 @@ File::File()
 	this->_parameter_funcs_map["div"] = &File::div;
 	this->_parameter_funcs_map["mod"] = &File::mod;
 
+
+	// initialization of a map that contains functions that don't take parameters
 	this->_non_parameter_funcs_map["pop"] = &File::pop;
 	this->_non_parameter_funcs_map["dump"] = &File::dump;
 	this->_non_parameter_funcs_map["add"] = &File::add;
@@ -24,6 +27,7 @@ File::File()
 	this->_non_parameter_funcs_map["print"] = &File::print;
 	this->_non_parameter_funcs_map["exit"] = &File::exit;
 
+	// initialization of a map that contains operand types
 	this->_types["int8"] = eOperandType::Int8;
 	this->_types["int16"] = eOperandType::Int16;
 	this->_types["int32"] = eOperandType::Int32;
@@ -40,13 +44,20 @@ File::File(std::istream& stream): File()
 	command_data	data;
 	int				line_nb = 1;
 
+	//reading from stream
 	while (std::getline(stream, str) && (!standard_input || str != ";;"))
 	{
-		if (!this->_exit)
+		if (!this->_exit) //after the "exit" command, next commands are ignored
 		{
+			//erase comments
 			if (str.find(';') != std::string::npos)
 				str.erase(str.find(';'));
 
+			//validate and execute command
+			// it's a maybe correct command, empty line or incorrect command.
+			// if a command is correct and it's not empty, then execute it.
+			// else if a line is empty, then, ignore it.
+			// else it is incorrect command.
 			if (File::validate_command(str, data) && !str.empty())
 				execute(data, line_nb);
 			else if (!str.empty())
@@ -59,6 +70,7 @@ File::File(std::istream& stream): File()
 		line_nb++;
 	}
 
+	//if the file did not receive the "end" command, then it's error
 	if (!this->_exit)
 		throw no_exit_exception("File has no exit(");
 }

@@ -2,7 +2,7 @@
 #include "../Factory/Factory.hpp"
 
 void
-File::push(command_data const & info)
+File::push(command_data const & info) // push the operand into the stack
 {
 	IOperand const *	result;
 
@@ -11,7 +11,7 @@ File::push(command_data const & info)
 }
 
 void
-File::assert(command_data const & info)
+File::assert(command_data const & info) // compare the input operand and last operand in the stack
 {
 	eOperandType		operand_type = this->_types[info.type];
 	std::string			str_value = info.parameter;
@@ -21,11 +21,14 @@ File::assert(command_data const & info)
 		throw not_enough_operands_exception("Not enough operands for command (need: 1, exist: "
 													+ std::to_string(this->_stack.size()) + ")");
 	}
-	if (operand_type != this->_stack.front()->getType()
 
+
+	if (operand_type != this->_stack.front()->getType() //if the types are different
+
+		// else if the type is integer and operands are different
 		||	(operand_type < eOperandType::Float
 			&& (std::stoi(str_value) != std::stoi(this->_stack.front()->toString())))
-
+		// else if the type is floating point and operands are different
 		|| (operand_type >= eOperandType::Float
 			&& (std::stod(str_value) != std::stod(this->_stack.front()->toString()))))
 	{
@@ -34,7 +37,7 @@ File::assert(command_data const & info)
 }
 
 void
-File::pop()
+File::pop() // pop the last operand from the stack
 {
 	if (this->_stack.empty())
 	{
@@ -47,14 +50,14 @@ File::pop()
 }
 
 void
-File::dump()
+File::dump() // print all operands
 {
 	for (IOperand const * operand : this->_stack)
 		std::cout << operand->toString() << std::endl;
 }
 
 void
-File::print()
+File::print() // print the last operand as ASCII symbol if it is possible
 {
 	if (this->_stack.empty())
 	{
@@ -73,7 +76,7 @@ File::print()
 }
 
 void
-File::exit()
+File::exit() // accept the "exit" command
 {
 	this->_exit = true;
 }

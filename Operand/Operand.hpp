@@ -11,6 +11,8 @@ public:
 	Operand(eOperandType, Type);
 	Operand(Operand const &) = default;
 
+	~Operand() final = default;
+
 	int					getPrecision() const override;
 	eOperandType		getType() const override;
 
@@ -30,10 +32,6 @@ public:
 	public:
 		explicit invalid_operand_exception(std::string const &);
 	};
-
-
-
-	~Operand() final = default;
 
 private:
 	eOperandType	_type;

@@ -10,7 +10,12 @@ class Factory
 public:
 	Factory();
 
-	Factory&			operator =(Factory const &);
+	Factory(Factory const &) = default;
+
+	~Factory() = default;
+
+	Factory&			operator =(Factory const &) = default;
+
 
 	IOperand const *	createOperand(eOperandType, std::string const &) const;
 
@@ -46,9 +51,6 @@ public:
 		explicit incorrect_input_exception(std::string const &);
 	};
 
-
-
-	~Factory() = default;
 private:
 	std::map<eOperandType, IOperand const * (Factory::*)(std::string const &) const> _funcs_map;
 
@@ -57,8 +59,6 @@ private:
 	IOperand const *	createInt32(std::string const &) const;
 	IOperand const *	createFloat(std::string const &) const;
 	IOperand const *	createDouble(std::string const &) const;
-
-	Factory(Factory const &);
 };
 
 #endif

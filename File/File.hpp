@@ -103,6 +103,8 @@ private:
 	static bool		validate_command(std::string const &, command_data &);
 	void			execute(command_data const & line, int line_nb);
 
+	void			check_operands_count(size_t need);
+
 	void			push(command_data const &);
 	void			assert(command_data const &);
 	void			add(command_data const &);

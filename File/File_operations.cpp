@@ -41,6 +41,7 @@ File::validate_command(std::string const & str, command_data & data)
 		res = true;
 	else if (std::regex_match(str.c_str(), info, non_parameter_commands))
 	{
+		//if type and parameter in data are empty, then it is command without parameter
 		data.command = info.str(COMMAND_POS);
 		data.type = "";
 		data.parameter = "";

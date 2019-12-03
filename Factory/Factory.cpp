@@ -3,6 +3,9 @@
 #include <climits>
 #include "../Operand/Operand.hpp"
 
+/* It is a class, that create operands. */
+/* It implements a factory pattern.     */
+
 //===Constructors and Destructor====================================================================
 
 Factory::Factory()
@@ -154,17 +157,6 @@ Factory::createOperand(eOperandType type, std::string const & value) const
 }
 
 //===End Functions==================================================================================
-
-//===Operators======================================================================================
-
-Factory&
-Factory::operator =(Factory const &src)
-{
-	static_cast<void>(src);
-	return (*this);
-}
-
-//===End Operators==================================================================================
 
 //===Exceptions=====================================================================================
 

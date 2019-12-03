@@ -42,15 +42,18 @@ namespace
 void
 VM::read_file(char** files, int count)
 {
+	// if there are no arguments, then read from the standard input
 	if (!count)
 	{
 		read_from_stdin();
 		return;
 	}
 
+	//else read from all arguments
 	for (int i = 0; i < count; i++)
 	{
-		std::cout << "~~~~~~~~ File: " + std::to_string(i) + " ~~~~~~~~\n" << std::endl;
+		std::cout << "~~~~~~~~ File: " + std::to_string(i)
+					+ " ~~~~~~~~\n" << std::endl;
 
 		if (!strcmp(files[i], "-in"))
 			read_from_stdin();
