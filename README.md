@@ -22,7 +22,7 @@ add
 sub                  
 mul                  
 div                  
-mod                 | 
+mod                 | hello
 
 Type      | Details 
 ----------|--------------------
