@@ -1,6 +1,7 @@
 # AbstractVM #
 
-This is a virtual machine that is based on stack storage and the calculation of basic arithmetic expressions.
+AbstractVM is a 42 school project. This is a virtual machine based on storing on the stack and calculating basic arithmetic expressions.
+
 
 ## Syntax ##
 
@@ -20,7 +21,7 @@ Comments            | Comments start with a ’;’ and finish with a newline.
 EOF(in stdin)       | Denoted as ";;"
 add sub mul div mod \[\*type\*(n)\]     | Unstacks the first two values on the stack or unstacks the first value on the stack and next one from the argument, then adds/subtracts/multiplies/divides / calculates the modulus and stacks the result.
 
-In this table, \*type\* is one of five types:
+In this list, \*type\* is one of five types:
 
 Type      | Details 
 ----------|--------------------
