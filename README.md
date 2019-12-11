@@ -1,7 +1,29 @@
 # AbstractVM #
 
-AbstractVM is a 42 school project. This is a virtual machine based on storing on the stack and calculating basic arithmetic expressions.
+42 School project.
 
+This is a virtual machine based on storing on the stack and calculating basic arithmetic expressions.
+
+## Compilation ##
+
+Clone this repository and run compilation with cmake:
+    
+    mkdir build && cd build
+    cmake ../
+    make
+    
+## Usage ##
+
+The program can be run without arguments:
+
+    ./AbstractVM
+
+Reading will come from standard input.
+The program can also be run with arguments:
+
+    ./AbstractVM [-in | *path to file*]...
+    
+Where -in is a flag that requires reading from standard input.
 
 ## Syntax ##
 
