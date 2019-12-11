@@ -14,10 +14,10 @@ push \*type\*(n)   | Pushes the value v at the top of the stack.
 pop                | Unstacks the value from the top of the stack.
 dump               | Displays each value of the stack, from the most recent one to the oldest one.
 assert \*type\*(n) | Asserts that the value at the top of the stack is equal
-to the one passed as parameter for this instruction.
+                   | to the one passed as parameter for this instruction.
 print              | Asserts that the value at the top of the stack is an 8-bit integer.
-(If not, see the instruction assert), then interprets it as an ASCII value and
-displays the corresponding character on the standard output.
+                   | (If not, see the instruction assert), then interprets it as an ASCII value and
+                   | displays the corresponding character on the standard output.
 exit               | Terminate the execution of the instructions.
 Comments           | Comments start with a ’;’ and finish with a newline.
 EOF(in stdin)      | Denoted as ";;"
