@@ -18,8 +18,9 @@ print               | Asserts that the value at the top of the stack is an 8-bit
 exit                | Terminate the execution of the instructions.
 Comments            | Comments start with a ’;’ and finish with a newline.
 EOF(in stdin)       | Denoted as ";;"
-add sub mul div mod \[\*type\*(n)\]     | Unstacks the first two values on the stack or unstacks the first value on the stack and next one from argument, adds / subtracts / multiplies / divides / calculates the modulus, then stacks the result.
+add sub mul div mod \[\*type\*(n)\]     | Unstacks the first two values on the stack or unstacks the first value on the stack and next one from the argument, then adds/subtracts/multiplies/divides / calculates the modulus and stacks the result.
 
+In this table, \*type\* is one of five types:
 
 Type      | Details 
 ----------|--------------------
