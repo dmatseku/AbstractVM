@@ -18,10 +18,10 @@ print               | Asserts that the value at the top of the stack is an 8-bit
 exit                | Terminate the execution of the instructions.
 Comments            | Comments start with a ’;’ and finish with a newline.
 EOF(in stdin)       | Denoted as ";;"
-add                 | 
-sub                 | 
-mul                 | 
-div                 | 
+add                  
+sub                  
+mul                  
+div                  
 mod                 | 
 
 Type      | Details 
