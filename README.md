@@ -2,7 +2,7 @@
 
 42 School project.
 
-This is a virtual machine based on storing on the stack and calculating basic arithmetic expressions.
+It is a virtual machine based on storing on the stack and calculating basic arithmetic expressions.
 
 ## Compilation ##
 
