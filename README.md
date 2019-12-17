@@ -14,11 +14,10 @@ Clone this repository and run compilation with cmake:
     
 ## Usage ##
 
-The program can be run without arguments:
+The program can be run without arguments, then reading will come from standard input:
 
     ./AbstractVM
 
-Reading will come from standard input.
 The program can also be run with arguments:
 
     ./AbstractVM [-in | *path to file*]...
